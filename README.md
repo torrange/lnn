@@ -3,11 +3,12 @@
 This repository contains a tiny, lightweight implementation of the KNN algorithm
 in Cython.
 
-By passing a mean vector-representation of each target class, as opposed to a 
-vector for each sample,the size of the dataset is greatly reduced as is the classification time. 
-The accuracy will be lower the KNN for datasets with few samples, however, representations 
-of much larger datasets can be handled by LNN, due to the fact the all samples of a class are 
-reduced to a single vector.
+By passing a mean vector-representation of each target class (as opposed to a 
+vector for each sample) the size of the input dataset is greatly reduced, as is
+the classification time for unseen data. The accuracy will be lower than the KNN 
+algorithm for datasets with a fewer number of samples, however, representations 
+of much larger datasets can be handled by LNN, due to the fact the all samples of a
+class are averaged and reduced onto to a single vector.
 
 
 Currently, LNN only classifies data with continuous features from CSV data. Please see the example
