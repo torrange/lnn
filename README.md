@@ -1,7 +1,7 @@
 # LNN - Light Nearest Neighbour
 
-This repository contains a tiny, lightweight implementation of the KNN algorithm
-in Cython.
+This repository contains a tiny, lightweight implementation of the KNN
+algorithm, written in Cython.
 
 By passing a mean vector-representation of each target class (as opposed to a 
 vector for each sample) the size of the input dataset is greatly reduced, as is
