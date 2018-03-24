@@ -10,39 +10,38 @@ def load_dataset(path):
         [row[-1:] for row in rows][:-1]
     )
 
-    return dataset, targets
+    def compress_dataset(dataset, targets):
+        cdef int i
+        model = {}
+        counts = {}
 
+        for t, d in zip(targets, dataset):
+            if t[0] not in model.keys():
+                model[t[0]] = d
+                counts[t[0]] = 1
+            else:
+                for i in xrange(len(d)):
+                    model[t[0]][i] += d[i]
+                counts[t[0]] += 1
 
-def compress_dataset(dataset, targets):
-    cdef int i
-    model = {}
-    counts = {}
+        _model = {}
 
-    for t, d in zip(targets, dataset):
-        if t[0] not in model.keys():
-            model[t[0]] = d
-            counts[t[0]] = 1
-        else:
-            for i in xrange(len(d)):
-                model[t[0]][i] += d[i]
-            counts[t[0]] += 1
+        for label in model.keys():
+            data = model[label]
+            for i in xrange(len(data)):
+                data[i] = data[i] / float(counts[label])
+            _model[label] = data
 
-    _model = {}
+        targets = []
+        dataset = []
 
-    for label in model.keys():
-        data = model[label]
-        for i in xrange(len(data)):
-            data[i] = data[i] / float(counts[label])
-        _model[label] = data
+        for t, d in _model.iteritems():
+            targets.append([t])
+            dataset.append(d)
 
-    targets = []
-    dataset = []
+        return dataset, targets
 
-    for t, d in _model.iteritems():
-        targets.append([t])
-        dataset.append(d)
-
-    return dataset, targets
+    return compress_dataset(dataset, targets)
 
 
 cdef magnitude(list a, list b):
