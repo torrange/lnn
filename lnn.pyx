@@ -65,8 +65,9 @@ def classify(vector, dataset, outputs):
             len(dataset) == len(outputs)):
         raise TypeError("data shape must be consistent")
 
+    cdef int i
     indexes = [i for i in xrange(len(dataset))]
     distances = [magnitude(vector, x) for x in dataset]
-    idx = distances.index(min(distances))
+    i = distances.index(min(distances))
 
-    return outputs[idx]
+    return outputs[i]
